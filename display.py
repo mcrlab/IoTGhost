@@ -6,7 +6,7 @@ class Display:
     def __init__(self, width, height, spi, chipSelect):
         self.width = width
         self.height = height
-        self.buffer = [0] * ((x * y) * 3)
+        self.buffer = [0] * ((width * height) * 3)
         self.spi = spi 
         self.cs = chipSelect 
 
@@ -21,15 +21,15 @@ class Display:
             i = i + 3
 
     def clear(self):
-        self.fill(0,0,0)
+        self.fill((0,0,0))
 
     def off(self):
-        self.fill(0,0,0)
+        self.fill((0,0,0))
         self.render()
 
     def set_pixel(self, x, y, color):
         r, g, b = color
-        position = ((y * self.x) + x) * 3
+        position = ((y * self.width) + x) * 3
         self.buffer[position]     = r
         self.buffer[position + 1] = g
         self.buffer[position + 2] = b
