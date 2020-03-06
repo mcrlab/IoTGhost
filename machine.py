@@ -1,5 +1,8 @@
 class Pin():
-    def __init__(self, pinId, state):
+    OUT = 1
+    IN = 0
+
+    def __init__(self, pinId, state = 0):
         pass
     
     def value(self, state):

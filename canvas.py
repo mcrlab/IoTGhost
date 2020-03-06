@@ -1,14 +1,11 @@
 
-_SOF = 0x72
+class Canvas:
 
-class Display:
-
-    def __init__(self, width, height, spi, chipSelect):
+    def __init__(self, width, height):
         self.width = width
         self.height = height
         self.buffer = [0] * ((width * height) * 3)
-        self.spi = spi 
-        self.cs = chipSelect 
+
 
     def fill(self, color):
         r, g, b = color
@@ -23,18 +20,18 @@ class Display:
     def clear(self):
         self.fill((0,0,0))
 
-    def off(self):
-        self.fill((0,0,0))
-        self.render()
 
     def set_pixel(self, x, y, color):
+
+        if x >= self.width or y >= self.height or x < 0 or y < 0:
+            return
+
         r, g, b = color
         position = ((y * self.width) + x) * 3
         self.buffer[position]     = r
         self.buffer[position + 1] = g
         self.buffer[position + 2] = b
 
-    def render(self):
-        self.cs.value(0)
-        self.spi.write(bytes([_SOF] + self.buffer))
-        self.cs.value(1)
+    def get_buffer(self):
+        return self.buffer
+        
